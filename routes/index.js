@@ -82,4 +82,10 @@ router.post('/login', function(req, res, next) {
   });
 });
 
+/*Get Login page */
+router.get('/signout', function(req, res, next) {
+  req.session.destroy();
+  res.redirect('/');
+});
+
 module.exports = router;

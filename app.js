@@ -32,6 +32,12 @@ app.use(session({
 }));
 app.use(flash());
 
+// Set session for EJS //after session, before routing
+app.use(function(req, res, next) {
+  res.locals.user = req.session.user;
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
