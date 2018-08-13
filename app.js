@@ -40,6 +40,16 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', indexRouter);
+//session check for admin,members
+app.use(function(req, res, next){
+  if (req.session.user) {
+    next();
+  }else {
+    req.flash('warning', 'Authentication failed! Please login');
+    req.flash('forward',req.path);
+    res.redirect('/signin');
+  }
+});
 app.use('/members', members);
 app.use('/admin', admin);
 
