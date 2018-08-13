@@ -16,6 +16,7 @@
   </body>
   <script src="/js/jquery.min.js" charset="utf-8"></script>
   <script type="text/javascript">
+  $(function(){
     <% if(messages.warning){ %>
     alert('<%=messages.warning%>');
     <% } %>
@@ -24,5 +25,6 @@
       $('#email').val("<%=email%>");
       $('#password').focus();
     <% } %>
+  });
   </script>
 </html>
