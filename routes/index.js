@@ -14,11 +14,7 @@ router.get('/signup', function(req, res, next) {
 
 /*Post signup page */
 router.post('/signup', function(req, res, next) {
-  var params =[
-      req.body.name,
-      req.body.email,
-      req.body.password
-  ];
+  var params =[req.body.name, req.body.email, req.body.password, 'USER'];
   User.findByEmail(req.body.email, function(err, rows){
     if (err) throw err;
     if (rows.length > 0) {
@@ -101,6 +97,16 @@ router.post('/login', function(req, res, next) {
 router.get('/signout', function(req, res, next) {
   req.session.destroy();
   res.redirect('/');
+});
+
+/* TODO init */
+router.get('/init', function(req, res, next) {
+  var params =['Admin', 'help@abc.com', 'Ki123456','ADMIN'];
+      User.add(params, function(err, result){
+        if(err) throw err;
+        console.log('init', result);
+        res.end('Ok');
+      });
 });
 
 module.exports = router;
