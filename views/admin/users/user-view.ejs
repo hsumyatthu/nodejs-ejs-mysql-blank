@@ -5,21 +5,22 @@
     <title><%=title%></title>
   </head>
   <body>
+    <h1><%=title%></h1>
     <form name="frm" action="/admin/users/remove" method="post">
       <input type="hidden" name="uid" value="<%= user.uid %>">
       <p>Name: <%= user.name %></p>
       <p>Email: <%= user.email %></p>
       <p>Role: <%= user.role %></p>
       <p>Updated: <%= user.updated %></p>
-      <a href="/admin/users/list">Go to list</a>
-      <a href="/admin/users/modify/<%=user.uid%>">Modify</a>
+      <a href="/admin/users/list">Go to list</a>&nbsp&nbsp
+      <a href="/admin/users/modify/<%=user.uid%>">Modify</a>&nbsp&nbsp
       <a href="javascript:del()">Remove</a>
     </form>
   </body>
   <script type="text/javascript">
     function del(){
       if(confirm('Are you sure?')){
-        frm.submit();      
+        frm.submit();
       }
     }
   </script>

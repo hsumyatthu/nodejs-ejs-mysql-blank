@@ -5,6 +5,7 @@
     <title><%=title%></title>
   </head>
   <body>
+    <h1><%=title%></h1>
     <form class="frm" action="/admin/users/modify" method="post">
       <input type="hidden" name="uid" value="<%= user.uid %>">
       Name:<input type="text" name="name" value="<%= user.name %>"><br>

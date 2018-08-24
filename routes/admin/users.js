@@ -47,4 +47,24 @@ router.post('/remove', function(req, res, next) {
   });
 });
 
+router.get('/add', function(req, res, next) {
+  res.render('admin/users/user-add', { title: 'Add User' });
+});
+
+router.post('/add', function(req, res, next) {
+  var params =[req.body.name, req.body.email, req.body.password, req.body.role];
+  User.findByEmail(req.body.email, function(err, rows){
+    if (err) throw err;
+    if (rows.length > 0) {
+      req.flash('warning', 'Duplicated email!!');
+      res.redirect('/admin/users/add');
+    }else {
+      User.add(params, function(err2, result){
+        if(err2) throw err2;
+        res.redirect('/admin/users/view/'+result.insertId);
+      });
+    }
+  });
+});
+
 module.exports = router;
