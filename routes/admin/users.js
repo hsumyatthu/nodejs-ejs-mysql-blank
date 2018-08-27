@@ -4,9 +4,10 @@ var User = require('../../models/User');
 
 router.all('/list', function(req, res, next) {
   var params = [req.body.keyword||'', req.body.keyword||'', req.body.role||''];
-  User.find(params, function(err, users) {
+  var orderby = [req.body.sortField||'updated', req.body.sortOrder||'DESC'];
+  User.find(params, orderby, function(err, users) {
     if (err) throw err;
-    res.render('admin/users/user-list', { title: 'User List', users: users, search:{keyword: req.body.keyword, role: req.body.role} });
+    res.render('admin/users/user-list', { title: 'User List', users: users, search:{keyword: req.body.keyword, role: req.body.role}, order:orderby });
   });
 });
 

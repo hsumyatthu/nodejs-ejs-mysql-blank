@@ -7,6 +7,8 @@
   <body>
     <h1><%= title %></h1>
     <form action="/admin/users/list" name="frm" method="post">
+      <input type="hidden" name="sortField" id="sortField" value="<%=order[0]%>">
+      <input type="hidden" name="sortOrder" id="sortOrder" value="<%=order[1]%>">
       <select name="role">
         <option value="">All</option>
         <option value="ADMIN">Admin</option>
@@ -16,18 +18,19 @@
       <input type="submit" value="Search">
     </form>
     <style media="screen">
-      table tr td{
+      table, th, td{
         border: 1px solid black;
+        border-collapse: collapse;
       }
     </style>
     <table>
       <thead>
         <tr>
-          <td>No</td>
-          <td>Name</td>
-          <td>Email</td>
-          <td>Role</td>
-          <td>Updated</td>
+          <th>No</th>
+          <th data-order="name">Name</th>
+          <th data-order="email">Email</th>
+          <th data-order="role">Role</th>
+          <th data-order="updated">Updated</th>
         </tr>
       </thead>
       <tbody>
@@ -49,12 +52,24 @@
     </table><br>
     <a href="/admin/users/add">Add User</a>
   </body>
+  <script src="/js/jquery.min.js" charset="utf-8"></script>
   <script type="text/javascript">
+  <%-
   if('<%= search.role %>'){
     frm.role.value = '<%= search.role %>';
   }
   if('<%= messages.info %>'){
     alert('<%= messages.info %>');
   }
+  $(function(){
+    $('th').click(function(){
+      if(!$(this).data('order')) return false;
+      var data = $(this).attr("data-order");
+      $('#sortField').val(data);
+      ($('#sortOrder').val()=='DESC')? $('#sortOrder').val('ASC') : $('#sortOrder').val('DESC');
+      frm.submit();
+    });
+    $('th[data-order="<%= order[0] %>"]').append(($('#sortOrder').val() == 'DESC')? '\u25B2' : '\u25BC');
+  });
   </script>
 </html>
